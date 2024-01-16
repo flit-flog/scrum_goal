@@ -1,3 +1,12 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  devise_for :users
+  root to: 'homes#top'
+  
+  resources :teams do
+    resource :team_users, only: [:create, :destroy]
+    resources :diaries
+  end
+  
+  
+  post '/homes/guest_sign_in', to: 'homes#guest_sign_in'
 end
