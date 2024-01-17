@@ -1,0 +1,34 @@
+<div>
+  <% if @permits.present? %>
+  <table>
+    <thead>
+      <tr>
+        <th></th>
+        <th>名前</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @permits.each do |permit| %>
+        <tr>
+          <td>
+          <!--ユーザー画像-->
+          </td>
+          <td>
+            <%= link_to permit.user.name, public_user_path(permit.user.id), class: "text-dark" %>
+          </td>
+          <td>
+            <%= link_to '申請許可', team_team_users_path(@team, permit_id: permit.id), method: :post, class: "btn btn-sm btn-success" %>
+          </td>
+          <td>
+　          <%= link_to '申請拒否', team_permits_path(permit), method: :delete, class: "btn btn-sm btn-danger" %>
+　         </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </tabl>
+  <% else %>
+    <p class="text-center">承認待ちユーザーはいません。</P>
+  <% end %>
+  <p class="text-center"><%= link_to "戻る", team_path(@team), class: 'text-dark font-weight-bold' %></p>
+</div>

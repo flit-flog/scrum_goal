@@ -1,0 +1,14 @@
+<div>
+  <table>
+    <tr>
+      <th>タイトル</th>
+      <th>ユーザー名</th>
+    </tr>
+    <%= @diaries.each do |diary| %>
+      <tr>
+        <td><%= diary.title %></td>
+        <td><%= diary.user.name %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>

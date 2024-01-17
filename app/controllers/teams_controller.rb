@@ -1,5 +1,6 @@
 class TeamsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:index, :show]
+  before_action :owner?, only: [:edit, :update, :destroy]
   
   def index
     @teams = Team.all
@@ -16,13 +17,12 @@ class TeamsController < ApplicationController
   def create
     @team = Team.new(team_params)
     @team.owner_id = current_user.id
-    # if @team.save
-    @team.save
-      # チーム詳細に変更
-      redirect_to teams_path
-    # else
-      # render 'new'
-    # end
+    if @team.save
+      @team.users << current_user
+      redirect_to team_path(@team.id)
+    else
+      render 'new'
+    end
   end
   
   def edit
@@ -37,9 +37,22 @@ class TeamsController < ApplicationController
     end
   end
   
+  def permits
+    @team = Team.find(params[:id])
+    @permits = @team.permits.page(params[:page])
+  end
+
+  
   private
   
   def team_params
     params.require(:team).permit(:name,:introduction,:image)
+  end
+  
+  def owner?
+    team = Team.find(params[:id])
+    if team.owner != current_user
+      redirect_to team_path(team.id)
+    end
   end
 end

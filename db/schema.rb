@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_01_16_153805) do
+ActiveRecord::Schema.define(version: 2024_01_17_070321) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -51,6 +51,15 @@ ActiveRecord::Schema.define(version: 2024_01_16_153805) do
     t.index ["user_id"], name: "index_diaries_on_user_id"
   end
 
+  create_table "permits", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "team_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["team_id"], name: "index_permits_on_team_id"
+    t.index ["user_id"], name: "index_permits_on_user_id"
+  end
+
   create_table "team_users", force: :cascade do |t|
     t.integer "user_id"
     t.integer "team_id"
@@ -86,6 +95,8 @@ ActiveRecord::Schema.define(version: 2024_01_16_153805) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "diaries", "teams"
   add_foreign_key "diaries", "users"
+  add_foreign_key "permits", "teams"
+  add_foreign_key "permits", "users"
   add_foreign_key "team_users", "teams"
   add_foreign_key "team_users", "users"
 end

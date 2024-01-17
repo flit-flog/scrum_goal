@@ -14,7 +14,7 @@
     <%#= render 'header'%>
     <% if user_signed_in? %>
   <li>
-    <%= link_to '投稿フォーム', new_diary_path %>
+    <%#= link_to '投稿フォーム', new_diary_path %>
   </li>  <li>
     <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
   </li>

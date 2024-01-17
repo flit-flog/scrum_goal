@@ -1,7 +1,9 @@
 class Team < ApplicationRecord
   has_many :team_users, dependent: :destroy
   has_many :users, through: :team_users
+  has_many :permits, dependent: :destroy
   has_many :diaries, dependent: :destroy
+  belongs_to :owner, class_name: 'User', foreign_key: 'owner_id'
 
 
   validates :name, presence: true

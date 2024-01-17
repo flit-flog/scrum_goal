@@ -1,5 +1,5 @@
 <div>
-  <h2>Group Detail</h2>
+  <h2>チーム</h2>
   <table class="table table-hover table-inverse">
     <thead>
       <tr>
@@ -25,18 +25,22 @@
             <!-- @groupに紐づいたgroup_user（user_idカラムに自分のIDを持っている）があるかどうかを確かめる。-->
             <% if @team.team_users.exists?(user_id: current_user.id) %>
               <!-- group_usersコントローラーの#destroyアクションを発動　@groupからgroup_user(自分)を消す -->
-              <%= link_to '脱退する', team_team_users_path(@team), method: :delete, class: "btn btn-sm btn-danger" %>
+              <%= link_to '脱退する', team_team_users_path(@team), method: :delete, class: "btn btn-sm btn-danger" , data: { confirm: "本当にグループを退出しますか？" }%>
+            <% elsif @team.permits.exists?(user_id: current_user.id) %>
+              <%= link_to '申請取消', team_permits_path(@team), method: :delete, class: "btn btn-sm btn-danger" %>
             <% else %>
-            <!-- group_usersコントローラーの#createアクションを発動　@groupにgroup_user(自分)を追加する -->
-              <%= link_to '参加する', team_team_users_path(@team), method: :post, class: "btn btn-sm btn-success" %>
-            <% end %>
-          </td>
-          <td>
-            <% if @team.owner_id == current_user.id %>
-              <%= link_to 'Edit', edit_group_path(@team), class: "btn btn-sm btn-success" %>
+              <%= link_to '参加申請', team_permits_path(@team), method: :post, class: "btn btn-sm btn-success" %>
             <% end %>
           </td>
         </tr>
     </tbody>
   </table>
+  <div>
+    <% if @team.owner_id == current_user.id %>
+      <%= link_to "承認待ち一覧",permits_path(@team),class: "btn btn-sm btn-succes" %>
+      <%= link_to "チーム編集", edit_team_path(@team), class: "btn btn-sm btn-success" %>
+      <%#= link_to "チーム削除", team_path(@team), method: :delete, class: "btn btn-sm btn-danger",, data: { confirm: "本当に削除しますか？" } %>
+    <% end %>
+          
+  </div>
 </div>

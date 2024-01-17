@@ -4,7 +4,7 @@
         <th></th>
         <th>グループ名</th>
         <th>紹介文</th>
-        <th></th>
+        <th>オーナー名</th>
       </tr>
     </thead>
     <tbody>
@@ -13,11 +13,7 @@
           <td><%= image_tag team.get_image, size:"50x50" %></td>
           <td><%= link_to team.name, team_path(team) %></td>
           <td><%= team.introduction %></td>
-          <% if team.owner_id == current_user.id %>
-            <td>
-              <%= link_to 'Edit', edit_team_path(team), class: "btn btn-sm btn-success" %>
-            </td>
-          <% end %>
+          <td><%= team.owner.name %></td>
         </tr>
       <% end %>
     </tbody>
