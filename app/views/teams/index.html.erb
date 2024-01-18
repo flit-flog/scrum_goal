@@ -10,7 +10,7 @@
     <tbody>
       <% @teams.each do |team| %>
         <tr>
-          <td><%= image_tag team.get_image, size:"50x50" %></td>
+          <td><%= image_tag team.get_team_image(50,50) %></td>
           <td><%= link_to team.name, team_path(team) %></td>
           <td><%= team.introduction %></td>
           <td><%= team.owner.name %></td>

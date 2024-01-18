@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_01_17_070321) do
+ActiveRecord::Schema.define(version: 2024_01_18_062605) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -49,6 +49,25 @@ ActiveRecord::Schema.define(version: 2024_01_17_070321) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["team_id"], name: "index_diaries_on_team_id"
     t.index ["user_id"], name: "index_diaries_on_user_id"
+  end
+
+  create_table "diary_comments", force: :cascade do |t|
+    t.text "comment"
+    t.integer "user_id"
+    t.integer "diary_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["diary_id"], name: "index_diary_comments_on_diary_id"
+    t.index ["user_id"], name: "index_diary_comments_on_user_id"
+  end
+
+  create_table "favorites", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "diary_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["diary_id"], name: "index_favorites_on_diary_id"
+    t.index ["user_id"], name: "index_favorites_on_user_id"
   end
 
   create_table "permits", force: :cascade do |t|
@@ -95,6 +114,10 @@ ActiveRecord::Schema.define(version: 2024_01_17_070321) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "diaries", "teams"
   add_foreign_key "diaries", "users"
+  add_foreign_key "diary_comments", "diaries"
+  add_foreign_key "diary_comments", "users"
+  add_foreign_key "favorites", "diaries"
+  add_foreign_key "favorites", "users"
   add_foreign_key "permits", "teams"
   add_foreign_key "permits", "users"
   add_foreign_key "team_users", "teams"

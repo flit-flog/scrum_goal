@@ -1,0 +1,8 @@
+<div>
+  <%= current_user.name %>
+</div>
+<div>
+  <% @my_teams.each do |my_team| %>
+    <%= link_to my_team.name, team_path(my_team) %>
+  <% end %>
+</div>

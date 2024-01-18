@@ -19,6 +19,7 @@ class TeamsController < ApplicationController
     @team.owner_id = current_user.id
     if @team.save
       @team.users << current_user
+      flash[:notice] = "チームを作成しました。"
       redirect_to team_path(@team.id)
     else
       render 'new'
@@ -30,8 +31,9 @@ class TeamsController < ApplicationController
   end
 
   def update
-    if @team.update(group_params)
-      redirect_to groups_path
+    if @team.update(team_params)
+      flash[:notice] = "チーム情報を更新しました。"
+      redirect_to team_path(@team.id)
     else
       render "edit"
     end
@@ -39,7 +41,9 @@ class TeamsController < ApplicationController
   
   def permits
     @team = Team.find(params[:id])
-    @permits = @team.permits.page(params[:page])
+    @permits = @team.permits
+    # @permits = @team.permits.page(params[:page])
+    # @permits = Permits.where(team_id)
   end
 
   

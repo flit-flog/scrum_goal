@@ -2,8 +2,7 @@ class PermitsController < ApplicationController
   before_action :authenticate_user!
 
   def create
-    team = team.find(params[:team_id])
-    permit = current_user.permits.new(team_id: params[:team_id])
+    permit = current_user.permits.new(team_id: params[:id])
     permit.save
     redirect_to request.referer, notice: "グループへ参加申請をしました"
   end

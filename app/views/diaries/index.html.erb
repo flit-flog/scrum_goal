@@ -3,11 +3,17 @@
     <tr>
       <th>タイトル</th>
       <th>ユーザー名</th>
+      <th>内容</th>
+      <th>コメント数</th>
+      <th>いいね数</th>
     </tr>
     <%= @diaries.each do |diary| %>
       <tr>
-        <td><%= diary.title %></td>
+        <td><%= link_to diary.title, team_diary_path(params[:team_id],diary) %></td>
         <td><%= diary.user.name %></td>
+        <td></td>
+        <td><%= diary.diary_comments.count %></td>
+        <td></td>
       </tr>
     <% end %>
   </table>
