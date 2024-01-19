@@ -8,6 +8,8 @@ class TeamsController < ApplicationController
     
   def show
     @team = Team.find(params[:id])
+    @diaries = Diary.where(team_id: @team.id)
+
   end
   
   def new
@@ -29,6 +31,12 @@ class TeamsController < ApplicationController
   def edit
     @team = Team.find(params[:id])
   end
+  
+  def destroy
+    @team = Team.find(params[:id])
+    @team.destroy
+    redirect_to my_team_path(current_user)
+  end
 
   def update
     if @team.update(team_params)
@@ -40,12 +48,16 @@ class TeamsController < ApplicationController
   end
   
   def permits
-    @team = Team.find(params[:id])
+    @team = Team.find(params[:team_id])
     @permits = @team.permits
     # @permits = @team.permits.page(params[:page])
     # @permits = Permits.where(team_id)
   end
-
+  
+  def members
+    @team = Team.find(params[:team_id])
+    @members = @team.team_users
+  end
   
   private
   
@@ -56,7 +68,7 @@ class TeamsController < ApplicationController
   def owner?
     team = Team.find(params[:id])
     if team.owner != current_user
-      redirect_to team_path(team.id)
+      redirect_to request.referer, alert: "チームオーナー権限です"
     end
   end
 end

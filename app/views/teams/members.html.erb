@@ -1,0 +1,4 @@
+            <% @members.each do |member| %>
+              <%= link_to member.user.name, user_path(member.user) %>
+              <%=link_to "追放する", team_banishment_path(@team, team_user_id: member.id), method: :delete, class: "btn btn-sm btn-danger" %>
+            <% end %>

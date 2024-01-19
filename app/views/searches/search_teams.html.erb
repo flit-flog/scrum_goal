@@ -12,7 +12,7 @@
       </tr>
     </thead>
     <tbody>
-      <% @teams.each do |team| %>
+      <% @search_teams.each do |team| %>
         <tr>
           <td><%= image_tag team.get_team_image(50,50) %></td>
           <td><%= link_to team.name, team_path(team) %></td>

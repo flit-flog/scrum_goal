@@ -19,19 +19,22 @@
           <td><%= @team.introduction %></td>
           <td>
             <!-- @teamは中間テーブルを挟んでusersテーブルを見ている。-->
-            <% @team.users.each do |member| %>
-              <li style="list-style: none;"><%= member.name %></li>
-            <% end %>
+            <!--<%# @team.users.each do |member| %>-->
+            <!--  <li style="list-style: none;"><%#= member.name %></li>-->
+            <!--<%# end %>-->
+            <%= link_to "メンバー一覧", team_members_path(@team) %>
           </td>
           <td>
             <!-- @groupに紐づいたgroup_user（user_idカラムに自分のIDを持っている）があるかどうかを確かめる。-->
-            <% if @team.team_users.exists?(user_id: current_user.id) %>
+            <% if @team.owner_id == current_user.id %>
+              <%=link_to "チーム編集", edit_team_path(@team) %>
+            <%elsif @team.team_users.exists?(user_id: current_user.id) %>
               <!-- group_usersコントローラーの#destroyアクションを発動　@groupからgroup_user(自分)を消す -->
-              <%= link_to '脱退する', team_team_users_path(@team), method: :delete, class: "btn btn-sm btn-danger" , data: { confirm: "本当にグループを退出しますか？" }%>
+              <%= link_to "脱退する", team_team_users_path(@team), method: :delete, class: "btn btn-sm btn-danger" , data: { confirm: "本当にチームを退出しますか？" }%>
             <% elsif @team.permits.exists?(user_id: current_user.id) %>
-              <%= link_to '申請取消', team_permits_path(@team), method: :delete, class: "btn btn-sm btn-danger" %>
+              <%= link_to "申請取消", team_permits_path(@team), method: :delete, class: "btn btn-sm btn-danger" %>
             <% else %>
-              <%= link_to '参加申請', team_permits_path(@team), method: :post, class: "btn btn-sm btn-success" %>
+              <%= link_to "参加申請", team_permits_path(@team), method: :post, class: "btn btn-sm btn-success" %>
             <% end %>
           </td>
         </tr>
@@ -39,10 +42,30 @@
   </table>
   <div>
     <% if @team.owner_id == current_user.id %>
-      <%= link_to "承認待ち一覧",permits_path(@team),class: "btn btn-sm btn-succes" %>
-      <%= link_to "チーム編集", edit_team_path(@team), class: "btn btn-sm btn-success" %>
+      <%= link_to "承認待ち一覧",team_permits_path(@team),class: "btn btn-sm btn-succes" %>
       <%#= link_to "チーム削除", team_path(@team), method: :delete, class: "btn btn-sm btn-danger",, data: { confirm: "本当に削除しますか？" } %>
     <% end %>
           
+  </div>
+  
+  <div>
+     <table>
+    <tr>
+      <th>タイトル</th>
+      <th>ユーザー名</th>
+      <th>内容</th>
+      <th>コメント数</th>
+      <th>いいね数</th>
+    </tr>
+    <% @diaries.each do |diary| %>
+      <tr>
+        <td><%= link_to diary.title, team_diary_path(params[:id],diary) %></td>
+        <td><%= diary.user.name %></td>
+        <td></td>
+        <td><%= diary.diary_comments.count %></td>
+        <td><%= diary.favorites.count %></td>
+      </tr>
+    <% end %>
+  </table>
   </div>
 </div>

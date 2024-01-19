@@ -3,6 +3,7 @@ class Diary < ApplicationRecord
     belongs_to :team
     has_many :diary_comments, dependent: :destroy
     has_many :favorites, dependent: :destroy
+    has_many :favorited_users, through: :favorites, source: :user
     
     validates :title, presence: true
     validates :body, presence: true

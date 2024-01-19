@@ -15,13 +15,13 @@
           <!--ユーザー画像-->
           </td>
           <td>
-            <%= link_to permit.user.name, public_user_path(permit.user.id), class: "text-dark" %>
+            <%= link_to permit.user.name, user_path(permit.user.id), class: "text-dark" %>
           </td>
           <td>
             <%= link_to '申請許可', team_team_users_path(@team, permit_id: permit.id), method: :post, class: "btn btn-sm btn-success" %>
           </td>
           <td>
-　          <%= link_to '申請拒否', team_permits_path(permit), method: :delete, class: "btn btn-sm btn-danger" %>
+　          <%= link_to '申請拒否', team_refuse_permit_path(@team, permit_id: permit.id), method: :delete, class: "btn btn-sm btn-danger" %>
 　         </td>
         </tr>
       <% end %>

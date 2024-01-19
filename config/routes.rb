@@ -2,18 +2,25 @@ Rails.application.routes.draw do
   devise_for :users
   root to: 'homes#top'
   
-  resources :users
+  resources :users, only: [:show, :edit, :update, :destroy]
   get "users/:id/my_team" => "users#my_team", as: :my_team
   
   resources :teams do
-    resources :diaries do
+    resources :diaries, only: [:new, :create, :show, :edit, :update, :destroy] do
+      get "/favoritede_user" => "diaries#favorite", as: :favorited_user
       resources :favorites, only: [:create, :destroy, :index]
       resources :diary_comments, only: [:create, :destroy]
     end
     resource :team_users, only: [:create, :destroy]
+    # delete 'teams/:id/permits/refuse_permit' => 'permits#refuse_permit', as: :refuse_permit
+    get "permits" => "teams#permits", as: :permits
+    get "members" => "teams#members", as: :members
+    delete "members" => "team_users#banishment", as: :banishment
+
+    delete 'permits/refuse_permit' => 'permits#refuse_permit', as: :refuse_permit
     resource :permits, only: [:create, :destroy]
   end
   
-  get "teams/:id/permits" => "teams#permits", as: :permits
-  post '/homes/guest_sign_in', to: 'homes#guest_sign_in'
+  get "/search" => "searches#search_teams"
+  post '/homes/guest_sign_in'=> 'homes#guest_sign_in'
 end

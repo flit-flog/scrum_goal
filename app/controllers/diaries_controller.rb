@@ -11,16 +11,17 @@ class DiariesController < ApplicationController
     @diary.team_id = @team.id
     if @diary.save
       flash[:notice] = "投稿に成功しました。"
-      redirect_to team_diaries_path(@team,@diary)
+      redirect_to team_diary_path(@team,@diary)
     else
       flash.now[:alert] = "投稿に失敗しました。"
       render :new
     end
   end
   
-  def index
-    @diaries = Diary.where(team_id: params[:team_id])
-  end
+  # def index
+  #   @team = Team.find(params[:team_id])
+  #   @diaries = Diary.where(team_id: @team.id)
+  # end
   
   def show
     @diary = Diary.find(params[:id])
@@ -29,8 +30,13 @@ class DiariesController < ApplicationController
   
   def destroy
     diary = Diary.find(params[:id])
-    diary.destoroy
+    diary.destroy
     redirect_to  team_diaries_path(params[:team_id])
+  end
+  
+  def favorite
+    diary = Diary.find(params[:diary_id])
+    @favorited_users = diary.favorited_users
   end
   
   private

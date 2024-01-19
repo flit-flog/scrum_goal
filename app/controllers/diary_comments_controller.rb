@@ -8,6 +8,7 @@ class DiaryCommentsController < ApplicationController
       redirect_to team_diary_path(diary.team, diary)
     else
       redirect_to request.referer
+    end
   end
   
   def destroy

@@ -1,8 +1,17 @@
 <div>
   <%= current_user.name %>
 </div>
+
+<div>
+   <%= render "searches/form" %>
+</div>
+
+<div>
+  <%= link_to "チーム作成", new_team_path %>
+</div>
 <div>
   <% @my_teams.each do |my_team| %>
     <%= link_to my_team.name, team_path(my_team) %>
+    <%= link_to "投稿する", new_team_diary_path(my_team) %>
   <% end %>
 </div>

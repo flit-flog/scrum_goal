@@ -1,0 +1,4 @@
+<% @favorited_users.each do |favorited_user| %>
+  <%= image_tag favorited_user.get_profile_image(50,50) %>
+  <%= link_to favorited_user.name, user_path(favorited_user) %>
+<% end %>

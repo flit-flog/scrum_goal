@@ -33,6 +33,9 @@
       <% end %>
     </p>
   <% end %>
+  <% if @diary.favorites.present? %>
+    <%= link_to "いいねしたユーザー一覧",  team_diary_favorited_user_path(@diary.team_id, @diary.id) %>
+  <% end %>
 </div>
 
 

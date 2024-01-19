@@ -26,4 +26,7 @@
     <p class="text-center"><%= link_to "戻る", team_path(@team), class: 'text-dark font-weight-bold' %></p>
 
   </div>
+  <div>
+    <%= link_to "チームを削除する", team_path(@team), method: :delete, class: "btn btn-sm btn-danger" , data: { confirm: "本当にチームを削除しますか？"} %>
+  </div>
 </div>
