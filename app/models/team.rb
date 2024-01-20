@@ -17,4 +17,8 @@ class Team < ApplicationRecord
     end
       team_image.variant(resize_to_limit: [width, height]).processed
   end
+  
+  def team_member_by?(user)
+        team_users.exists?(user_id: user.id)
+  end
 end

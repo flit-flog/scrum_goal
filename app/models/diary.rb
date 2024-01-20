@@ -1,4 +1,8 @@
 class Diary < ApplicationRecord
+    
+    # action textの使用
+    has_rich_text :body
+    
     belongs_to :user
     belongs_to :team
     has_many :diary_comments, dependent: :destroy
@@ -8,11 +12,9 @@ class Diary < ApplicationRecord
     validates :title, presence: true
     validates :body, presence: true
     
-    has_one_attached :diary_image
-    
-    def get_diary_image(width, height)
-        profile_image.variant(resize_to_limit: [width, height]).processed
-    end
+    # def get_diary_image(width, height)
+    #     profile_image.variant(resize_to_limit: [width, height]).processed
+    # end
     
     def favorited_by?(user)
         favorites.exists?(user_id: user.id)

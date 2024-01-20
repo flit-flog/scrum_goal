@@ -5,12 +5,19 @@ Rails.application.routes.draw do
   resources :users, only: [:show, :edit, :update, :destroy]
   get "users/:id/my_team" => "users#my_team", as: :my_team
   
-  resources :teams do
-    resources :diaries, only: [:new, :create, :show, :edit, :update, :destroy] do
-      get "/favoritede_user" => "diaries#favorite", as: :favorited_user
-      resources :favorites, only: [:create, :destroy, :index]
+  resources :diaries, only: [:new, :create, :show, :edit, :update, :destroy] do
+      resources :favorites, only: [:create, :destroy]
       resources :diary_comments, only: [:create, :destroy]
-    end
+  end
+  get "diaries/:id/favoritede_user" => "diaries#favorite", as: :favorited_user
+
+  
+  resources :teams do
+    # resources :diaries, only: [:new, :create, :show, :edit, :update, :destroy] do
+    #   get "/favoritede_user" => "diaries#favorite", as: :favorited_user
+    #   resources :favorites, only: [:create, :destroy, :index]
+    #   resources :diary_comments, only: [:create, :destroy]
+    # end
     resource :team_users, only: [:create, :destroy]
     # delete 'teams/:id/permits/refuse_permit' => 'permits#refuse_permit', as: :refuse_permit
     get "permits" => "teams#permits", as: :permits

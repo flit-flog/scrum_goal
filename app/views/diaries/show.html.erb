@@ -15,26 +15,26 @@
 </div>
 <diV>
   <% if @diary.user == current_user %>
-    <%= link_to "削除", team_diary_path(@diary), method: :delete %>
+    <%= link_to "削除", diary_path(@diary), method: :delete %>
   <% end %>
 </diV>
 
 <div>
   <% if @diary.favorited_by?(current_user) %>
     <p>
-      <%= link_to team_diary_favorite_path(@diary.team_id, @diary.id), method: :delete do %>
+      <%= link_to diary_favorite_path(@diary), method: :delete do %>
         ♥<%= @diary.favorites.count %> いいね
       <% end %>
     </p>
     <% else %>
     <p>
-      <%= link_to team_diary_favorites_path(@diary.team_id, @diary.id), method: :post do %>
+      <%= link_to diary_favorites_path(@diary), method: :post do %>
         ♡<%= @diary.favorites.count %> いいね
       <% end %>
     </p>
   <% end %>
   <% if @diary.favorites.present? %>
-    <%= link_to "いいねしたユーザー一覧",  team_diary_favorited_user_path(@diary.team_id, @diary.id) %>
+    <%= link_to "いいねしたユーザー一覧",  favorited_user_path(@diary) %>
   <% end %>
 </div>
 
@@ -45,10 +45,13 @@
     <p><%#= image_tag diary_comment.user.get_profile_image(100,100) %></p>
     <%= diary_comment.user.name %>
     <%= diary_comment.created_at.strftime('%Y/%m/%d') %><%= diary_comment.comment %>
+    <% if diary_comment.user == current_user%>
+      <%= link_to "削除", diary_diary_comment_path(diary_comment.diary, diary_comment), method: :delete %>
+    <% end %>
   <% end %>
 </div>
 <div>
-  <%= form_with model: [@diary, @diary_comment], url: team_diary_diary_comments_path(diary_id: params[:id]) do |f| %>
+  <%= form_with model: [@diary, @diary_comment], url: diary_diary_comments_path(@diary) do |f| %>
     <%= f.text_area :comment, rows: '5', placeholder: "コメント" %>
     <%= f.submit "送信する" %>
   <% end %>

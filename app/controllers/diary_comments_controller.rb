@@ -5,15 +5,15 @@ class DiaryCommentsController < ApplicationController
     comment = current_user.diary_comments.new(diary_comment_params)
     comment.diary_id = diary.id
     if comment.save
-      redirect_to team_diary_path(diary.team, diary)
+      redirect_to diary_path(diary)
     else
-      redirect_to request.referer
+      redirect_to request.referer, alert: "入力内容がありません"
     end
   end
   
   def destroy
     DiaryComment.find(params[:id]).destroy
-    redirect_to team_diary_path(params[:diary_id])
+    redirect_to diary_path(params[:diary_id])
   end
   
   private

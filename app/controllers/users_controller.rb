@@ -19,6 +19,10 @@ class UsersController < ApplicationController
     end
     
     def destroy
+        @user = User.find(params[:id])
+        @owner_teams = Team.where(owner_id: @user.id).destroy_all
+        @user.destroy
+        redirect_to root_path
     end
     
     def my_team

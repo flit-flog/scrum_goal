@@ -8,8 +8,19 @@
   <% end %>
 </div>
 
-<!-- ユーザーの投稿一覧 -->
 
+<div>
+  <% if @user == current_user && current_user.team_users.blank? %>
+    <h5>チームに参加するか作成してください</h5>
+    <%= render "searches/form" %>
+    <%= link_to "チーム作成", new_team_path %>
+  <% end %>
+</div>
+
+<!-- ユーザーの投稿一覧 -->
+<div>
+  <%= link_to "投稿する", new_diary_path %>
+</div>
 <div>
   <table>
     <thead>
@@ -22,10 +33,10 @@
       
     <% @diaries.each do |diary| %>
       <% current_user.teams.each do |my_team| %>
-        <% if diary.id == my_team.id %>
+        <% if diary.team_id == my_team.id %>
           <tr>
             <td><%= diary.user.name %></td>
-            <td><%= link_to diary.title, team_diary_path(diary.team_id,diary.id) %></td>
+            <td><%= link_to diary.title, diary_path(diary) %></td>
             <td><%= diary.team.name %></td>
             <td><%= diary.favorites.count %></td>
             <td><%= diary.diary_comments.count %></td>

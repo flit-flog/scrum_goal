@@ -1,6 +1,6 @@
 class DiariesController < ApplicationController
    before_action :authenticate_user!
-   before_action :team_member?, only: [:new, :create, :destroy, :show, :favorite]
+   before_action :team_member?, only: [:destroy, :show, :favorite]
   
   def new
     @diary = current_user.diaries.new
@@ -8,12 +8,10 @@ class DiariesController < ApplicationController
   end
   
   def create
-    @team = Team.find(params[:team_id])
     @diary = current_user.diaries.new(diary_params)
-    @diary.team_id = @team.id
     if @diary.save
       flash[:notice] = "投稿に成功しました。"
-      redirect_to team_diary_path(@team,@diary)
+      redirect_to diary_path(@diary)
     else
       flash.now[:alert] = "投稿に失敗しました。"
       render :new
@@ -33,25 +31,25 @@ class DiariesController < ApplicationController
   def destroy
     diary = Diary.find(params[:id])
     diary.destroy
-    redirect_to  team_diaries_path(params[:team_id])
+    redirect_to  team_path(diary.team_id)
   end
   
   def favorite
-    diary = Diary.find(params[:diary_id])
+    diary = Diary.find(params[:id])
     @favorited_users = diary.favorited_users
   end
   
   private
   
   def diary_params
-    params.require(:diary).permit(:title,:body)
+    params.require(:diary).permit(:title,:body,:team_id)
   end
   
   def team_member?
-    team = Team.find(params[:team_id])
-    unless team.team_users.exists?(user_id: current_user.id)
+    diary = Diary.find(params[:id])
+    unless current_user.team_users.exists?(team_id: diary.team_id)
       redirect_to root_path, alert: "チームメンバーではありません"
     end
-    
   end
+  
 end

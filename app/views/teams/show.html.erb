@@ -48,6 +48,10 @@
           
   </div>
   
+<div>
+  <%= link_to "投稿する", new_diary_path %>
+</div>
+  
   <div>
      <table>
     <tr>
@@ -57,14 +61,17 @@
       <th>コメント数</th>
       <th>いいね数</th>
     </tr>
-    <% @diaries.each do |diary| %>
-      <tr>
-        <td><%= link_to diary.title, team_diary_path(params[:id],diary) %></td>
-        <td><%= diary.user.name %></td>
-        <td></td>
-        <td><%= diary.diary_comments.count %></td>
-        <td><%= diary.favorites.count %></td>
-      </tr>
+    
+    <% if @team.team_member_by?(current_user) %>
+      <% @diaries.each do |diary| %>
+        <tr>
+          <td><%= link_to diary.title, diary_path(diary) %></td>
+          <td><%= diary.user.name %></td>
+          <td></td>
+          <td><%= diary.diary_comments.count %></td>
+          <td><%= diary.favorites.count %></td>
+        </tr>
+      <% end %>
     <% end %>
   </table>
   </div>
