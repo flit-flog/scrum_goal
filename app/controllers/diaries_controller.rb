@@ -1,4 +1,6 @@
 class DiariesController < ApplicationController
+   before_action :authenticate_user!
+   before_action :team_member?, only: [:new, :create, :destroy, :show, :favorite]
   
   def new
     @diary = current_user.diaries.new
@@ -43,5 +45,13 @@ class DiariesController < ApplicationController
   
   def diary_params
     params.require(:diary).permit(:title,:body)
+  end
+  
+  def team_member?
+    team = Team.find(params[:team_id])
+    unless team.team_users.exists?(user_id: current_user.id)
+      redirect_to root_path, alert: "チームメンバーではありません"
+    end
+    
   end
 end

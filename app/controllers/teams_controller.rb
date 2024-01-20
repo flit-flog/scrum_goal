@@ -2,6 +2,7 @@ class TeamsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :owner?, only: [:edit, :update, :destroy]
   
+  
   def index
     @teams = Team.all
   end
@@ -60,6 +61,7 @@ class TeamsController < ApplicationController
   end
   
   private
+  
   
   def team_params
     params.require(:team).permit(:name,:introduction,:image)
