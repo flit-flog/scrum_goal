@@ -1,18 +1,17 @@
-<% if user_signed_in? %>
-  <li>
-    <%= link_to 'マイページ', user_path(current_user) %>
-  </li>
-  <li>
-    <%= link_to 'マイグループ', my_team_path(current_user)%>
-  </li>
-  <li>
-    <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
-  </li>
-<% else %>
-  <li>
-    <%= link_to "新規登録", new_user_registration_path %>
-  </li>
-  <li>
-    <%= link_to "ログイン", new_user_session_path %>
-  </li>
-<% end %>
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+  <h4 class="my-0 mr-md-auto font-weight-normal">Scrum Goal</h4>
+  <nav class="my-2 my-md-0 mr-md-3 d-flex">
+    <% if user_signed_in? %>
+      <%= link_to "マイページ", user_path(current_user), class: "p-2 text-dark"  %>
+      <%= link_to "マイグループ", my_team_path(current_user), class: "p-2 text-dark" %>
+      <%= link_to "投稿する",new_diary_path, class: "p-2 text-dark" %>
+      <%= link_to "#{current_user.name}さん", user_path(current_user), class: "p-2 text-dark"  %>
+      <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "btn btn-outline-danger" %>
+
+    <% else %>
+      <%= link_to "TOP", root_path, class: "p-2 mr-2 text-dark"  %>
+      <%= link_to "新規登録", new_user_registration_path, class: "mr-2 btn btn-outline-primary" %>
+      <%= link_to "ログイン", new_user_session_path, class: "btn btn-outline-success" %>
+  <% end %>
+  </nav>
+</div>

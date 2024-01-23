@@ -1,24 +1,13 @@
-<div>
-   <%= render "searches/form" %>
+<div class="container">
+  <div class="row justify-content-between">
+    <div>
+      <h4>"<%= @content %>"検索結果</h4>
+    </div>
+    <div>
+      <%= render "searches/form" %>
+    </div>
+  </div>
+  <div class="row">
+    <%= render "layouts/team_index", teams: @search_teams%>
+  </div>
 </div>
-
-<table class="table table-hover table-inverse">
-    <thead>
-      <tr>
-        <th></th>
-        <th>グループ名</th>
-        <th>紹介文</th>
-        <th>オーナー名</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @search_teams.each do |team| %>
-        <tr>
-          <td><%= image_tag team.get_team_image(50,50) %></td>
-          <td><%= link_to team.name, team_path(team) %></td>
-          <td><%= team.introduction %></td>
-          <td><%= team.owner.name %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>

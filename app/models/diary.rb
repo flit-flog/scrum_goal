@@ -12,10 +12,7 @@ class Diary < ApplicationRecord
     validates :title, presence: true
     validates :body, presence: true
     
-    # def get_diary_image(width, height)
-    #     profile_image.variant(resize_to_limit: [width, height]).processed
-    # end
-    
+    # いいねしているか確認メソッド
     def favorited_by?(user)
         favorites.exists?(user_id: user.id)
     end

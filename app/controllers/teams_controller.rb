@@ -9,7 +9,7 @@ class TeamsController < ApplicationController
     
   def show
     @team = Team.find(params[:id])
-    @diaries = Diary.where(team_id: @team.id)
+    @diaries = Diary.where(team_id: @team.id).order("created_at DESC").page(params[:page])
 
   end
   

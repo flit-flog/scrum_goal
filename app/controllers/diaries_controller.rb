@@ -14,7 +14,7 @@ class DiariesController < ApplicationController
       redirect_to diary_path(@diary)
     else
       flash.now[:alert] = "投稿に失敗しました。"
-      render :new
+      redirect_to new_diary_path
     end
   end
   

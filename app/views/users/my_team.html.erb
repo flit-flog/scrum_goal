@@ -1,16 +1,14 @@
-<div>
-  <%= current_user.name %>
+<div class="container">
+  <div class="row justify-content-between">
+    <div>
+    <h4>マイチーム</h4>
+    </div>
+    <div>
+      <%= render "searches/form" %>
+    </div>
+  </div>
+  <div class="row">
+    <%= render "layouts/team_index", teams: @my_teams%>
+  </div>
 </div>
 
-<div>
-   <%= render "searches/form" %>
-</div>
-
-<div>
-  <%= link_to "チーム作成", new_team_path %>
-</div>
-<div>
-  <% @my_teams.each do |my_team| %>
-    <%= link_to my_team.name, team_path(my_team) %>
-  <% end %>
-</div>
