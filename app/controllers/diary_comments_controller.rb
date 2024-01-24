@@ -1,5 +1,5 @@
 class DiaryCommentsController < ApplicationController
-  
+     before_action :authenticate_user!
   def create
     diary = Diary.find(params[:diary_id])
     comment = current_user.diary_comments.new(diary_comment_params)

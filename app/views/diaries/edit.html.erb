@@ -5,7 +5,7 @@
     <div class="col-md-6">
       <div class="d-flex flex-column align-items-center">
         <h2 class="text-center mb-4">活動記録編集</h2>
-        <%= form_with model: @diary, url: diaries_path do |f| %>
+        <%= form_with model: @diary, url: diary_path(@diary) do |f| %>
         <div class="mb-2">
           <h4>投稿チーム</h4>
           <%= f.collection_select :team_id, current_user.teams, :id, :name, class: "form-control",required: true, include_blank: "選択してください" %>

@@ -1,5 +1,6 @@
 class FavoritesController < ApplicationController
-  
+  before_action :authenticate_user!
+
   def create
     diary = Diary.find(params[:diary_id])
     favorite = current_user.favorites.new(diary_id: diary.id)

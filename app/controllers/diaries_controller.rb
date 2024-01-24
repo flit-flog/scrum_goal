@@ -9,7 +9,7 @@ class DiariesController < ApplicationController
   
   def create
     @diary = current_user.diaries.new(diary_params)
-    if @diary.save
+    if @diary.save(diary_params)
       flash[:notice] = "投稿に成功しました。"
       redirect_to diary_path(@diary)
     else
@@ -29,7 +29,7 @@ class DiariesController < ApplicationController
   
   def update
     @diary = Diary.find(params[:id])
-    @diary.update
+    @diary.update(diary_params)
     redirect_to diary_path(@diary)
   end
   
