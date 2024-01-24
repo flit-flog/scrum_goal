@@ -17,21 +17,26 @@ class DiariesController < ApplicationController
       redirect_to new_diary_path
     end
   end
-  
-  # def index
-  #   @team = Team.find(params[:team_id])
-  #   @diaries = Diary.where(team_id: @team.id)
-  # end
-  
+
   def show
     @diary = Diary.find(params[:id])
     @diary_comment = DiaryComment.new
   end
   
+  def edit
+    @diary = Diary.find(params[:id])
+  end
+  
+  def update
+    @diary = Diary.find(params[:id])
+    @diary.update
+    redirect_to diary_path(@diary)
+  end
+  
   def destroy
     diary = Diary.find(params[:id])
     diary.destroy
-    redirect_to  team_path(diary.team_id)
+    redirect_to  user_path(current_user)
   end
   
   def favorite

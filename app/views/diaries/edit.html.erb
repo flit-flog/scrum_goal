@@ -4,7 +4,7 @@
   <div class="row justify-content-center">
     <div class="col-md-6">
       <div class="d-flex flex-column align-items-center">
-        <h2 class="text-center mb-4">活動記録投稿</h2>
+        <h2 class="text-center mb-4">活動記録編集</h2>
         <%= form_with model: @diary, url: diaries_path do |f| %>
         <div class="mb-2">
           <h4>投稿チーム</h4>
@@ -18,9 +18,9 @@
           <h4>活動内容</h4>
           <%= f.rich_text_area :body,required: true %>  
         </div>
-          <%= f.submit '投稿',class: "btn btn-primary" %>
+          <%= f.submit '編集',class: "btn btn-primary" %>
         <% end %>
-        <%= link_to "戻る", :back %>
+        <%= link_to "戻る", :back %>>
       </div>
     </div>
   </div>

@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container mt-5">
   <div class="row border-bottom mb-3 p-2 align-items-center">
     
 
@@ -15,7 +15,7 @@
     <p>
       <% if @user == current_user %>
         <%= link_to edit_user_path(@user) do %>
-          <i class="bi bi-gear"></i>
+          <i class="bi bi-gear"></i>ユーザー編集
         <% end %>
       <% end %>
     </p>
@@ -40,8 +40,8 @@
                 <div class ="d-flex align-items-center ">
                   
                   <div class="d-flex flex-column col-3">
-                    <div class="rounded-circle overflow-hidden mr-3" style="width: 40px; height: 40px;">
-                      <%= image_tag diary.user.get_profile_image(50, 50,) %>
+                    <div class="rounded-circle overflow-hidden mr-3">
+                      <%= image_tag diary.user.get_profile_image(40,40) %>
                     </div>
                     <div>
                       <p class="mb-0"><%= diary.user.name %></p>
@@ -57,8 +57,8 @@
                       <p class="text-muted"><%= diary.created_at.strftime("%Y-%m-%d") %></p>
                   </div>
                   <div class="d-flex justify-content-end mt-auto">
-                    <p class="mr-3"><i class="fas fa-heart"></i> <%= diary.favorites.count %> Likes</p>
-                    <p><i class="fas fa-comment"></i> <%= diary.diary_comments.count %> Comments</p>
+                    <p class="mr-3"><i class="fas fa-heart"></i> <%= diary.favorites.count %> いいね</p>
+                    <p><i class="fas fa-comment"></i> <%= diary.diary_comments.count %> 件</p>
                   </div>
                 </diV>
               </div>

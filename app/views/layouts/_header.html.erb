@@ -2,7 +2,7 @@
   <h4 class="my-0 mr-md-auto font-weight-normal">Scrum Goal</h4>
   <nav class="my-2 my-md-0 mr-md-3 d-flex">
     <% if user_signed_in? %>
-      <%= link_to "マイページ", user_path(current_user), class: "p-2 text-dark"  %>
+      <%= link_to "マイページ", user_path(current_user), class: "p-2 text-dark" %>
       <%= link_to "マイグループ", my_team_path(current_user), class: "p-2 text-dark" %>
       <%= link_to "投稿する",new_diary_path, class: "p-2 text-dark" %>
       <%= link_to "#{current_user.name}さん", user_path(current_user), class: "p-2 text-dark"  %>

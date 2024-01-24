@@ -1,6 +1,44 @@
-            <% @members.each do |member| %>
-              <%= link_to member.user.name, user_path(member.user) %>
-              <% if current_user.id == @team.owner_id && member.id != @team.owner_id %>
-                <%=link_to "追放する", team_banishment_path(@team, team_user_id: member.id), method: :delete, class: "btn btn-sm btn-danger" %>
-              <% end %>
-            <% end %>
+ <div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="d-flex flex-column align-items-center">
+        <h2 class="text-center mb-4">メンバー一覧</h2>
+            <table class ="table table-hover table-inverse">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>名前</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                  <% @members.each do |member| %>
+                  <tr>
+                    <td>
+                      <div class=class="rounded-circle mr-3">
+                      <%= image_tag member.user.get_profile_image(40,40) %>
+                      </div>
+                    </td>
+                    <td>
+                      <%= link_to member.user.name, user_path(member.user) %>
+                    </td>
+                    <td>
+                      <% if current_user.id == @team.owner_id && member.id != @team.owner_id %>
+                        <%=link_to "追放する", team_banishment_path(@team, team_user_id: member.id), method: :delete, class: "btn btn-sm btn-danger" %>
+                      <% end %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </dv>
+      <p class="text-center"><%= link_to "戻る", team_path(@team), class: 'text-dark font-weight-bold' %></p>
+    </div>
+  </div>
+</div>           
+            
+            
+            
+              
+            <

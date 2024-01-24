@@ -40,6 +40,7 @@ class TeamsController < ApplicationController
   end
 
   def update
+    @team = Team.find(params[:id])
     if @team.update(team_params)
       flash[:notice] = "チーム情報を更新しました。"
       redirect_to team_path(@team.id)
@@ -64,7 +65,7 @@ class TeamsController < ApplicationController
   
   
   def team_params
-    params.require(:team).permit(:name,:introduction,:image)
+    params.require(:team).permit(:name,:introduction,:team_image)
   end
   
   def owner?

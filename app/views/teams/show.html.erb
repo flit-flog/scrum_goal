@@ -1,13 +1,12 @@
 <div class = "container">
   <div class = "row">
-    <h2>チーム</h2>
+    <h2><%= @team.name %></h2>
     <table class="table table-hover table-inverse">
       <thead>
         <tr>
           <th></th>
-          <th>チーム名</th>
-          <th>チームリーダー</th>
-          <th>紹介文</th>
+          <th>リーダー</th>
+          <th>紹介</th>
           <th>メンバー</th>
           <th colspan="3"></th>
         </tr>
@@ -15,20 +14,18 @@
       <tbody>
           <tr>
             <td><%= image_tag @team.get_team_image(100,100) %></td>
-            <td><%= @team.name %></td>
-            <td><%= @team.owner.name %></td>
-            <td><%= @team.introduction %></td>
+            <td><%= link_to @team.owner.name, user_path(@team.owner),class: "text-dark" %></td>
+            <td><%= safe_join(@team.introduction.split("\n"),tag(:br)) %></td>
             <td>
-              <!-- @teamは中間テーブルを挟んでusersテーブルを見ている。-->
-              <!--<%# @team.users.each do |member| %>-->
-              <!--  <li style="list-style: none;"><%#= member.name %></li>-->
-              <!--<%# end %>-->
-              <%= link_to "メンバー一覧", team_members_path(@team) %>
+              <%= @team.team_users.count %>人（<%= link_to "メンバー一覧", team_members_path(@team) %>）<br>
+              <% if @team.owner_id == current_user.id %>
+                <%= link_to "承認待ち",team_permits_path(@team) %>
+              <% end %>
             </td>
             <td>
               <!-- @groupに紐づいたgroup_user（user_idカラムに自分のIDを持っている）があるかどうかを確かめる。-->
               <% if @team.owner_id == current_user.id %>
-                <%=link_to "チーム編集", edit_team_path(@team) %>
+                <%=link_to "チーム編集", edit_team_path(@team), class: "btn btn-sm btn-success"%>
               <%elsif @team.team_users.exists?(user_id: current_user.id) %>
                 <!-- group_usersコントローラーの#destroyアクションを発動　@groupからgroup_user(自分)を消す -->
                 <%= link_to "脱退する", team_team_users_path(@team), method: :delete, class: "btn btn-sm btn-danger" , data: { confirm: "本当にチームを退出しますか？" }%>
@@ -41,16 +38,6 @@
           </tr>
       </tbody>
     </table>
-    <div>
-      <% if @team.owner_id == current_user.id %>
-        <%= link_to "承認待ち一覧",team_permits_path(@team),class: "btn btn-sm btn-succes" %>
-      <% end %>
-            
-    </div>
-    
-    <div>
-      <%= link_to "投稿する", new_diary_path %>
-    </div>
   </div>
   <div class = "row">
       <% if @team.team_member_by?(current_user) %>
@@ -65,7 +52,7 @@
                       <%= image_tag diary.user.get_profile_image(50, 50,) %>
                     </div>
                     <div>
-                      <p class="mb-0"><%= diary.user.name %></p>
+                      <p class="mb-0"><%= link_to diary.user.name, user_path(diary.user), class: "text-dark" %></p>
                     </div>
                   </div>
                   <div class="mx-auto">
@@ -78,8 +65,8 @@
                       <p class="text-muted"><%= diary.created_at.strftime("%Y-%m-%d") %></p>
                   </div>
                   <div class="d-flex justify-content-end mt-auto">
-                    <p class="mr-3"><i class="fas fa-heart"></i> <%= diary.favorites.count %> Likes</p>
-                    <p><i class="fas fa-comment"></i> <%= diary.diary_comments.count %> Comments</p>
+                    <p class="mr-3"><i class="fas fa-heart"></i> <%= diary.favorites.count %> いいね</p>
+                    <p><i class="fas fa-comment"></i> <%= diary.diary_comments.count %> 件</p>
                   </div>
                 </diV>
               </div>

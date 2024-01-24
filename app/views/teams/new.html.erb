@@ -5,12 +5,12 @@
         <%= form_with model: @team do |f| %>
           <div>
             <%= f.label :チーム名 %>
-            <%= f.text_field :name%>
+            <%= f.text_field :name,class: "form-control", required: true, size: 30%>
           </div>
         
           <div>
             <%= f.label :紹介文 %>
-            <%= f.text_area :introduction%>
+            <%= f.text_area :introduction, class: "form-control", size: "30x3"%>
           </div>
         
           <div>
