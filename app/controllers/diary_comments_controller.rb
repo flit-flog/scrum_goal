@@ -5,14 +5,17 @@ class DiaryCommentsController < ApplicationController
     comment = current_user.diary_comments.new(diary_comment_params)
     comment.diary_id = diary.id
     if comment.save
+      flash[:success] = "コメントを投稿しました"
       redirect_to diary_path(diary)
     else
-      redirect_to request.referer, alert: "入力内容がありません"
+      flash[:warning] = "入力内容がありません"
+      redirect_to request.referer
     end
   end
   
   def destroy
     DiaryComment.find(params[:id]).destroy
+    flash[:warning] = "コメントを削除しました"
     redirect_to diary_path(params[:diary_id])
   end
   

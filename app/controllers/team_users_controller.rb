@@ -8,7 +8,8 @@ class TeamUsersController < ApplicationController
     @permit = Permit.find(params[:permit_id])
     @team_user = TeamUser.create(user_id: @permit.user_id, team_id: params[:team_id])
     @permit.destroy #参加希望者リストから削除する
-    redirect_to request.referer, notice: "チームへの参加を許可しました"
+    flash[:success] = "申請を許可しました"
+    redirect_to request.referer, notice: 
 
   end
 
@@ -16,13 +17,17 @@ class TeamUsersController < ApplicationController
     team = Team.find(params[:team_id])
     # user = current_user
     team.users.delete(current_user)
-    redirect_to user_path(current_user), alert: "チームオーナー権限です"
+    Diary.where(team_id: team.id, user_id: current_user.id).destroy_all
+    flash[:warning] = "チームから脱退しました"
+    redirect_to user_path(current_user)
   end
   
   def banishment
     member = TeamUser.find(params[:team_user_id])
     member.destroy
-    redirect_to request.referer, alert: "チームから追放しました"
+    Diary.where(team_id: menmber.team_id, user_id: member.user_id).destroy_all
+    flash[:warning] = "チームから追放しました"
+    redirect_to request.referer
   end
   
   private 

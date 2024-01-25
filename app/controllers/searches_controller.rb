@@ -3,6 +3,6 @@ class SearchesController < ApplicationController
    
   def search_teams
     @content = params[:content]
-    @search_teams = Team.where('name LIKE ?', '%' + @content + '%')
+    @search_teams = Team.where('name LIKE ?', '%' + @content + '%').page(params[:page])
   end
 end

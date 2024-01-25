@@ -17,9 +17,11 @@
             <td><%= link_to @team.owner.name, user_path(@team.owner),class: "text-dark" %></td>
             <td><%= safe_join(@team.introduction.split("\n"),tag(:br)) %></td>
             <td>
-              <%= @team.team_users.count %>人（<%= link_to "メンバー一覧", team_members_path(@team) %>）<br>
+              <%= link_to "メンバー一覧", team_members_path(@team) %>
+              <%="(#{@team.team_users.count}人)" %><br>
               <% if @team.owner_id == current_user.id %>
                 <%= link_to "承認待ち",team_permits_path(@team) %>
+                <%= "(#{@team.permits.count}人)" %>
               <% end %>
             </td>
             <td>
@@ -74,6 +76,8 @@
           </div>
         <% end %>
       <% end %>
-      <%= paginate @diaries %>
+  </div>
+  <div class="row justify-content-center m-3 p-3">
+    <%= paginate @diaries %>
   </div>
 </div>

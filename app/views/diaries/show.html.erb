@@ -1,88 +1,80 @@
 <div class="container mt-5d">
+  <!--diary情報-->
   <div class="row justify-content-center">
-      <div class="col-6 border-bottom">
-            <h2><%= @diary.title %></h2>
-            
-            <p>
-              <%= @diary.created_at.strftime('%Y/%m/%d') %> | 
-              user:<%= link_to @diary.user.name, user_path(@diary.user) %> |
-              team:<%= link_to @diary.team.name, team_path(@diary.team) %> |
-              
-              <% if @diary.user == current_user %>
-                <%= link_to "編集", edit_diary_path(@diary) %>
-                <%= link_to "削除", diary_path(@diary), method: :delete, data: { confirm: "本当に削除しますか？"} %>
-              <% end %>
-            </p>
-        <%= @diary.body %>
-      </div>
-  </div>
-  
-    <div class="row justify-content-center">
-      <div class="col-1">
-        <%= link_to "戻る", :back %>
-      
+    <div class="col-6 border-bottom">
+      <h2><%= @diary.title %></h2>
+      <p>
+        <%= @diary.created_at.strftime('%Y/%m/%d') %> | 
+        user:<%= link_to @diary.user.name, user_path(@diary.user) %> |
+        team:<%= link_to @diary.team.name, team_path(@diary.team) %> |
+        
+        <% if @diary.user == current_user %>
+          <%= link_to "編集", edit_diary_path(@diary) %>
+          <%= link_to "削除", diary_path(@diary), method: :delete, data: { confirm: "本当に削除しますか？"} %>
+        <% end %>
+      </p>
+      <%= @diary.body %>
     </div>
-    <div class="col-4">
+  </div>
+  <!--いいね-->
+  <div class="row justify-content-center">
+    <div class="col-1">
+      <%= link_to "戻る", :back ,class: 'text-dark font-weight-bold'%>
+    </div>
+    <div class="col-4 text-dark">
       <% if @diary.favorited_by?(current_user) %>
-        
-          <%= link_to diary_favorite_path(@diary), method: :delete do %>
-            ♥<%= @diary.favorites.count %>
-          <% end %>
-        
+        <%= link_to diary_favorite_path(@diary), method: :delete do %>
+          <i class="fas fa-heart unlike-btn" ></i>
+        <% end %>
+        <%= @diary.favorites.count %>
       <% else %>
-        
-          <%= link_to diary_favorites_path(@diary), method: :post do %>
-            ♡<%= @diary.favorites.count %> 
-          <% end %>
-        
+        <%= link_to diary_favorites_path(@diary), method: :post do %>
+          <i class="far fa-heart like-btn"></i>
+        <% end %>
+        <%= @diary.favorites.count %> 
       <% end %>
       
-        
-          <% if @diary.favorites.present? %>
-            <%= link_to "いいね一覧",  favorited_user_path(@diary) %>
-          <% end %>
-        
+      <% if @diary.favorites.present? %>
+        <%= link_to "いいね一覧",  favorited_user_path(@diary) %>
+      <% end %>
     </div>
-      </div>
+  </div>
       
-      <div class="row justify-content-center">
-        <div class="col-6">
-          <h5>コメント</h5>
-          </div>
-        </div>
-
-    <% @diary.diary_comments.each do |diary_comment| %>
-      <div class="row justify-content-center my-3 p-2">
-        <div class="col-1 border-bottom">
-            <%= image_tag diary_comment.user.get_profile_image(50,50) %>
-        </div>
-        <div class="col-5 border-bottom">
-          <div class="mb-1">
-            <%= diary_comment.user.name %>
-            <%= diary_comment.created_at.strftime('%Y/%m/%d') %>
-            <% if diary_comment.user == current_user%>
-              <%= link_to "削除", diary_diary_comment_path(diary_comment.diary, diary_comment), method: :delete %>
-            <% end %>
-          </div>
-            <%= safe_join(diary_comment.comment.split("\n"),tag(:br)) %>
-        </div>
+  <div class="row justify-content-center">
+    <div class="col-6">
+      <h5>コメント</h5>
+    </div>
+  </div>
+<!--コメント-->
+  <% @diary.diary_comments.each do |diary_comment| %>
+    <div class="row justify-content-center my-3 p-2">
+      <div class="col-1 border-bottom">
+          <%= image_tag diary_comment.user.get_profile_image(50,50) %>
       </div>
-    <% end %>
+      <div class="col-5 border-bottom">
+        <div class="mb-1">
+          <%= diary_comment.user.name %>
+          <%= diary_comment.created_at.strftime('%Y/%m/%d') %>
+          <% if diary_comment.user == current_user%>
+            <%= link_to "削除", diary_diary_comment_path(diary_comment.diary, diary_comment), method: :delete %>
+          <% end %>
+        </div>
+          <%= safe_join(diary_comment.comment.split("\n"),tag(:br)) %>
+      </div>
+    </div>
+  <% end %>
 
-
+<!--コメントフォーム-->
   <div class="row justify-content-center mt-3">
     <div class="col-6">
       <div class="d-flex flex-column">
-
-      
-      <%= form_with model: [@diary, @diary_comment], url: diary_diary_comments_path(@diary) do |f| %>
+        <%= form_with model: [@diary, @diary_comment], url: diary_diary_comments_path(@diary) do |f| %>
         <%= f.text_area :comment, placeholder: "コメント", size: "30x3" %>
+      </div>
+      <div>
+        <%= f.submit "送信する" %>
+        <% end %>
     </div>
-    <div>
-      <%= f.submit "送信する" %>
-    </div>
-    <% end %>
     </div>
   </div>
-  
 </div>

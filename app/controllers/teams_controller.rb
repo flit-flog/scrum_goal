@@ -22,9 +22,10 @@ class TeamsController < ApplicationController
     @team.owner_id = current_user.id
     if @team.save
       @team.users << current_user
-      flash[:notice] = "チームを作成しました。"
+      flash[:success] = "チームを作成しました。"
       redirect_to team_path(@team.id)
     else
+      flash[:warning].now = "チームの作成に失敗しました"
       render 'new'
     end
   end
@@ -42,9 +43,10 @@ class TeamsController < ApplicationController
   def update
     @team = Team.find(params[:id])
     if @team.update(team_params)
-      flash[:notice] = "チーム情報を更新しました。"
+      flash[:success] = "チーム情報を更新しました。"
       redirect_to team_path(@team.id)
     else
+      flash.now[:warning] = "チーム情報の更新に失敗しました"
       render "edit"
     end
   end
@@ -71,7 +73,7 @@ class TeamsController < ApplicationController
   def owner?
     team = Team.find(params[:id])
     if team.owner != current_user
-      redirect_to request.referer, alert: "チームオーナー権限です"
+      redirect_to request.referer, warning: "チームオーナー権限です"
     end
   end
 end

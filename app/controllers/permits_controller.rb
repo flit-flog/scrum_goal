@@ -5,26 +5,26 @@ class PermitsController < ApplicationController
     team = Team.find(params[:team_id])
     permit = current_user.permits.new(team_id: team.id)
     if permit.save
-      redirect_to request.referer, notice: "チームへ参加申請をしました"
+      flash[:success] = "参加申請をしました"
+      redirect_to request.referer
     else
-      redirect_to teams_path
+      redirect_to my_team_path
     end
   end
 
   def destroy
-    # permit = Permit.find(params[:permit_id])
-    # @permit = Permit.find(params[:permit_id])
     permit = current_user.permits.find_by(team_id: params[:team_id])
-    # # @permit = Permit.find(params[:permit_id])
     permit.destroy
-    redirect_to request.referer, alert: "チームへの参加申請を取消しました"
+    flash[:warning] = "参加申請を取消しました"
+    redirect_to request.referer 
   end
   
   
   def refuse_permit
     @permit = Permit.find(params[:permit_id])
     @permit.destroy
-    redirect_to request.referer, alert: "チームへの参加申請を取消しました"
+    flash[:warning] = "参加申請を拒否しました"
+    redirect_to request.referer
   end
 
 end

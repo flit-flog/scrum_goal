@@ -1,1 +1,23 @@
-<%= link_to 'ゲストログイン（閲覧用）', homes_guest_sign_in_path, method: :post %>
+<div class="container">
+  <div class="row">
+    <div class="mx-auto">
+      <h1>Scrum<i class="fa-solid fa-football"></i>Goal</h1>
+      <p>チームに参加・作成しよう。</p>
+      <p>活動記録を投稿しよう。</p>
+      <p>チームで共有しよう</p>
+    </div>
+  </div>
+  <div class="btn-wrapper col-3 mx-auto">
+    <div class="row">
+      <%= link_to "ログイン", new_user_session_path, class: "btn btn-info btn-sm btn-block mb-3" %>
+    </div>
+    <div class="row">
+      <%= link_to "新規登録", new_user_registration_path, class: "btn btn-primary btn-sm btn-block mb-3" %>
+    </div>
+    <div class="row">
+      <%= link_to 'ゲストログイン（閲覧用）', homes_guest_sign_in_path, method: :post ,class: "btn btn-success btn-sm btn-block mb-3"%>
+    </div>
+  </div>
+</div>
+
+

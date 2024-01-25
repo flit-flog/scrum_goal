@@ -26,7 +26,7 @@ class UsersController < ApplicationController
     end
     
     def my_team
-        @my_teams = current_user.teams
+        @my_teams = current_user.teams.page(params[:page])
     end
     
     private

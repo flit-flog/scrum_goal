@@ -1,8 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :users,skip: [:passwords], controllers: {
-    registrations: "user/registrations",
-    sessions: 'user/sessions'
-  }
+  devise_for :users
   root to: 'homes#top'
   
   resources :users, only: [:show, :edit, :update, :destroy]
@@ -15,14 +12,8 @@ Rails.application.routes.draw do
   get "diaries/:id/favoritede_user" => "diaries#favorite", as: :favorited_user
 
   
-  resources :teams do
-    # resources :diaries, only: [:new, :create, :show, :edit, :update, :destroy] do
-    #   get "/favoritede_user" => "diaries#favorite", as: :favorited_user
-    #   resources :favorites, only: [:create, :destroy, :index]
-    #   resources :diary_comments, only: [:create, :destroy]
-    # end
+  resources :teams, only: [:new, :create, :show, :edit, :update, :destroy]do
     resource :team_users, only: [:create, :destroy]
-    # delete 'teams/:id/permits/refuse_permit' => 'permits#refuse_permit', as: :refuse_permit
     get "permits" => "teams#permits", as: :permits
     get "members" => "teams#members", as: :members
     delete "members" => "team_users#banishment", as: :banishment
