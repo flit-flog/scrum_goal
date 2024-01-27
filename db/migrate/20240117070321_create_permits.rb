@@ -1,8 +1,8 @@
 class CreatePermits < ActiveRecord::Migration[6.1]
   def change
     create_table :permits do |t|
-      t.references :user, null: false, foreign_key: true
-      t.references :team, null: false, foreign_key: true
+      t.references :user, type: :bigint, foreign_key: true
+      t.references :team, type: :bigint, foreign_key: true
 
       t.timestamps
     end
