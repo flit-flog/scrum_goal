@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_01_27_064456) do
+ActiveRecord::Schema.define(version: 2024_01_20_170843) do
 
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
@@ -25,8 +25,8 @@ ActiveRecord::Schema.define(version: 2024_01_27_064456) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
-    t.integer "record_id", null: false
-    t.integer "blob_id", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
@@ -45,13 +45,13 @@ ActiveRecord::Schema.define(version: 2024_01_27_064456) do
   end
 
   create_table "active_storage_variant_records", force: :cascade do |t|
-    t.integer "blob_id", null: false
+    t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
   create_table "diaries", force: :cascade do |t|
-    t.bigint "user_id"
+    t.integer "user_id"
     t.integer "team_id"
     t.string "title"
     t.datetime "created_at", precision: 6, null: false
@@ -62,8 +62,8 @@ ActiveRecord::Schema.define(version: 2024_01_27_064456) do
 
   create_table "diary_comments", force: :cascade do |t|
     t.text "comment"
-    t.integer "user_id"
-    t.integer "diary_id"
+    t.bigint "user_id"
+    t.bigint "diary_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["diary_id"], name: "index_diary_comments_on_diary_id"
@@ -71,8 +71,8 @@ ActiveRecord::Schema.define(version: 2024_01_27_064456) do
   end
 
   create_table "favorites", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "diary_id"
+    t.bigint "user_id"
+    t.bigint "diary_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["diary_id"], name: "index_favorites_on_diary_id"
@@ -80,8 +80,8 @@ ActiveRecord::Schema.define(version: 2024_01_27_064456) do
   end
 
   create_table "permits", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "team_id", null: false
+    t.bigint "user_id"
+    t.bigint "team_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["team_id"], name: "index_permits_on_team_id"
@@ -89,8 +89,8 @@ ActiveRecord::Schema.define(version: 2024_01_27_064456) do
   end
 
   create_table "team_users", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "team_id"
+    t.bigint "user_id"
+    t.bigint "team_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["team_id"], name: "index_team_users_on_team_id"
