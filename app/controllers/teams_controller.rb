@@ -25,7 +25,7 @@ class TeamsController < ApplicationController
       flash[:success] = "チームを作成しました。"
       redirect_to team_path(@team.id)
     else
-      flash[:warning].now = "チームの作成に失敗しました"
+      flash[:warning] = "チームの作成に失敗しました"
       render 'new'
     end
   end
