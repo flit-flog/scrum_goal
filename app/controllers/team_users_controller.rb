@@ -25,7 +25,7 @@ class TeamUsersController < ApplicationController
   def banishment
     member = TeamUser.find(params[:team_user_id])
     member.destroy
-    Diary.where(team_id: menmber.team_id, user_id: member.user_id).destroy_all
+    Diary.where(team_id: member.team_id, user_id: member.user_id).destroy_all
     flash[:warning] = "チームから追放しました"
     redirect_to request.referer
   end
