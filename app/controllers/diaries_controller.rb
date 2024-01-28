@@ -13,7 +13,7 @@ class DiariesController < ApplicationController
       flash[:success] = "投稿に成功しました。"
       redirect_to diary_path(@diary)
     else
-      flash.now[:warning] = "投稿に失敗しました。"
+      flash[:warning] = "投稿に失敗しました。"
       render 'new'
     end
   end
@@ -40,8 +40,8 @@ class DiariesController < ApplicationController
   end
   
   def favorite
-    @diary = Diary.find(params[:id])
-    @favorited_users = @diary.favorited_users
+    diary = Diary.find(params[:id])
+    @favorited_users = diary.favorited_users
   end
   
   private

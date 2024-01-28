@@ -31,6 +31,7 @@
         <%= link_to "チーム作成", new_team_path %>
       <% end %>
     </div>
+    <!--同じチームに所属している場合、そのチームに投稿した活動記録を表示する-->
     <% @diaries.each do |diary| %>
       <% current_user.teams.each do |my_team| %>
         <% if diary.team_id == my_team.id %>

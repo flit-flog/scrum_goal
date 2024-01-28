@@ -15,7 +15,6 @@ class TeamUsersController < ApplicationController
 
   def destroy
     team = Team.find(params[:team_id])
-    # user = current_user
     team.users.delete(current_user)
     Diary.where(team_id: team.id, user_id: current_user.id).destroy_all
     flash[:warning] = "チームから脱退しました"
