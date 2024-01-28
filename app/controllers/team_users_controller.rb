@@ -21,6 +21,7 @@ class TeamUsersController < ApplicationController
     redirect_to user_path(current_user)
   end
   
+  # チームから追放
   def banishment
     member = TeamUser.find(params[:team_user_id])
     member.destroy
@@ -31,6 +32,7 @@ class TeamUsersController < ApplicationController
   
   private 
   
+  # チームオーナー確認メソッド
   def owner?
     team = Team.find(params[:team_id])
     if team.owner != current_user

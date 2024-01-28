@@ -4,7 +4,6 @@ class DiariesController < ApplicationController
   
   def new
     @diary = current_user.diaries.new
-    #@team = Team.find_by(id: params[:team_id])
   end
   
   def create
@@ -39,6 +38,7 @@ class DiariesController < ApplicationController
     redirect_to  user_path(current_user)
   end
   
+  # いいねした人の表示
   def favorite
     diary = Diary.find(params[:id])
     @favorited_users = diary.favorited_users
@@ -50,10 +50,12 @@ class DiariesController < ApplicationController
     params.require(:diary).permit(:title,:body,:team_id)
   end
   
+  # チームに所属しているか確認
   def team_member?
     diary = Diary.find(params[:id])
     unless current_user.team_users.exists?(team_id: diary.team_id)
-      redirect_to root_path, alert: "チームメンバーではありません"
+      flash[:warning] = "チームメンバーではありません"
+      redirect_to user_path(current_user)
     end
   end
   

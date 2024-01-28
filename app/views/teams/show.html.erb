@@ -25,11 +25,9 @@
               <% end %>
             </td>
             <td>
-              <!-- @groupに紐づいたgroup_user（user_idカラムに自分のIDを持っている）があるかどうかを確かめる。-->
               <% if @team.owner_id == current_user.id %>
                 <%=link_to "チーム編集", edit_team_path(@team), class: "btn btn-sm btn-success"%>
               <%elsif @team.team_users.exists?(user_id: current_user.id) %>
-                <!-- group_usersコントローラーの#destroyアクションを発動　@groupからgroup_user(自分)を消す -->
                 <%= link_to "脱退する", team_team_users_path(@team), method: :delete, class: "btn btn-sm btn-danger" , data: { confirm: "本当にチームを退出しますか？" }%>
               <% elsif @team.permits.exists?(user_id: current_user.id) %>
                 <%= link_to "申請取消", team_permits_path(@team), method: :delete, class: "btn btn-sm btn-danger" %>
@@ -42,40 +40,41 @@
     </table>
   </div>
   <div class = "row">
-      <% if @team.team_member_by?(current_user) %>
-        <% @diaries.each do |diary| %>
-          <div class="col-md-6 mb-4">
-            <div class="card">
-              <div class="card-body py-1">
-                <div class ="d-flex align-items-center ">
-                  
-                  <div class="d-flex flex-column col-3">
-                    <div class="rounded-circle overflow-hidden mr-3" style="width: 40px; height: 40px;">
-                      <%= image_tag diary.user.get_profile_image(50, 50,) %>
-                    </div>
-                    <div>
-                      <p class="mb-0"><%= link_to diary.user.name, user_path(diary.user), class: "text-dark" %></p>
-                    </div>
+    <!--閲覧者がチームに所属している場合-->
+    <% if @team.team_member_by?(current_user) %>
+      <% @diaries.each do |diary| %>
+        <div class="col-md-6 mb-4">
+          <div class="card">
+            <div class="card-body py-1">
+              <div class ="d-flex align-items-center ">
+                
+                <div class="d-flex flex-column col-3">
+                  <div class="rounded-circle overflow-hidden mr-3" style="width: 40px; height: 40px;">
+                    <%= image_tag diary.user.get_profile_image(50, 50,) %>
                   </div>
-                  <div class="mx-auto">
-                    <h5 class="card-title text-center"><%= link_to diary.title, diary_path(diary) %></h5>
+                  <div>
+                    <p class="mb-0"><%= link_to diary.user.name, user_path(diary.user), class: "text-dark" %></p>
                   </div>
                 </div>
-                <diV class="d-flex">
-                  
-                  <div class = "mr-auto">
-                      <p class="text-muted"><%= diary.created_at.strftime("%Y-%m-%d") %></p>
-                  </div>
-                  <div class="d-flex justify-content-end mt-auto">
-                    <p class="mr-3"><i class="fas fa-heart"></i> <%= diary.favorites.count %> いいね</p>
-                    <p><i class="fas fa-comment"></i> <%= diary.diary_comments.count %> 件</p>
-                  </div>
-                </diV>
+                <div class="mx-auto">
+                  <h5 class="card-title text-center"><%= link_to diary.title, diary_path(diary) %></h5>
+                </div>
               </div>
+              <diV class="d-flex">
+                
+                <div class = "mr-auto">
+                    <p class="text-muted"><%= diary.created_at.strftime("%Y-%m-%d") %></p>
+                </div>
+                <div class="d-flex justify-content-end mt-auto">
+                  <p class="mr-3"><i class="fas fa-heart"></i> <%= diary.favorites.count %> いいね</p>
+                  <p><i class="fas fa-comment"></i> <%= diary.diary_comments.count %> 件</p>
+                </div>
+              </diV>
             </div>
           </div>
-        <% end %>
+        </div>
       <% end %>
+    <% end %>
   </div>
   <div class="row justify-content-center m-3 p-3">
     <%= paginate @diaries %>
