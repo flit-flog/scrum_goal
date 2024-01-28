@@ -15,13 +15,13 @@ class TeamUsersController < ApplicationController
 
   def destroy
     team = Team.find(params[:team_id])
-    # user = current_user
     team.users.delete(current_user)
     Diary.where(team_id: team.id, user_id: current_user.id).destroy_all
     flash[:warning] = "チームから脱退しました"
     redirect_to user_path(current_user)
   end
   
+  # チームから追放
   def banishment
     member = TeamUser.find(params[:team_user_id])
     member.destroy
@@ -32,6 +32,7 @@ class TeamUsersController < ApplicationController
   
   private 
   
+  # チームオーナー確認メソッド
   def owner?
     team = Team.find(params[:team_id])
     if team.owner != current_user

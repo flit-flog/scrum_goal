@@ -15,10 +15,4 @@ class FavoritesController < ApplicationController
     redirect_to diary_path(diary)
   end
   
-  # 削除
-  # def index
-  #   diary = Diary.find(params[:diary_id])
-  #   favorites = Favorite.where(diary_id: diary.id).pluck(:user_id)
-  #   @favorite_users = User.find(favorites)
-  # end
 end

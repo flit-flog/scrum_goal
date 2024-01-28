@@ -51,20 +51,19 @@ class TeamsController < ApplicationController
     end
   end
   
+  # 承認待ち一覧
   def permits
     @team = Team.find(params[:team_id])
     @permits = @team.permits
-    # @permits = @team.permits.page(params[:page])
-    # @permits = Permits.where(team_id)
   end
   
+  # チームメンバー一覧
   def members
     @team = Team.find(params[:team_id])
     @members = @team.team_users
   end
   
   private
-  
   
   def team_params
     params.require(:team).permit(:name,:introduction,:team_image)

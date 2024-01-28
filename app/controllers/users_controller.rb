@@ -25,6 +25,7 @@ class UsersController < ApplicationController
         redirect_to root_path
     end
     
+    # 所属チーム表示
     def my_team
         @my_teams = current_user.teams.page(params[:page])
     end
