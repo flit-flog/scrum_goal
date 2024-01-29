@@ -1,6 +1,6 @@
 class DiariesController < ApplicationController
    before_action :authenticate_user!
-   before_action :team_member?, only: [:destroy, :show, :favorite]
+   before_action :team_member?, only: [:destroy, :show]
   
   def new
     @diary = current_user.diaries.new
