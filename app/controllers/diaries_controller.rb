@@ -40,8 +40,8 @@ class DiariesController < ApplicationController
   
   # いいねした人の表示
   def favorite
-    diary = Diary.find(params[:id])
-    @favorited_users = diary.favorited_users
+    @diary = Diary.find(params[:id])
+    @favorited_users = @diary.favorited_users
   end
   
   private
