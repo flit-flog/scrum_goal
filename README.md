@@ -19,7 +19,8 @@
 - チームの通達を確認する時
 ​
 ## 設計書
-​
+- ER図(https://app.diagrams.net/#G1SUGPnvDj4MBuGw4zWHvbDNrBAryZjRq8)
+- UIフロー図(https://app.diagrams.net/#G1ukiKsV99xIKqbxizWGrqblDYQNLSMftm)​
 ## 開発環境
 - OS：Linux(CentOS)
 - 言語：HTML,CSS,JavaScript,Ruby,SQL
