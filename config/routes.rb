@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   
   resources :diaries, only: [:new, :create, :show, :edit, :update, :destroy] do
       resources :favorites, only: [:create, :destroy]
-      resources :diary_comments, only: [:create, :destroy]
+      resources :diary_comments, only: [:create, :destroy, :update]
   end
   get "diaries/:id/favoritede_user" => "diaries#favorite", as: :favorited_user
 

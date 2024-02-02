@@ -45,6 +45,13 @@
           <%= diary_comment.created_at.strftime('%Y/%m/%d') %>
           <% if diary_comment.user == current_user%>
             <%= link_to "削除", diary_diary_comment_path(diary_comment.diary, diary_comment), method: :delete %>
+            <span data-comment-id=<%= diary_comment.id %> class="js-edit-comment-button">
+              <i class="fas fa-edit"></i>
+            </span>
+             
+            <div id="js-comment-<%= diary_comment.id %>">
+            　<%= render "diary_comments/js_comment", diary: @diary, diary_comment: diary_comment %>
+            </div>
           <% end %>
         </div>
           <%= safe_join(diary_comment.comment.split("\n"),tag(:br)) %>

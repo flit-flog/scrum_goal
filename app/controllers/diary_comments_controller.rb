@@ -1,5 +1,6 @@
 class DiaryCommentsController < ApplicationController
-     before_action :authenticate_user!
+  before_action :set_comment, only: [:update, :destroy]
+  before_action :authenticate_user!
      
   def create
     diary = Diary.find(params[:diary_id])
@@ -15,12 +16,20 @@ class DiaryCommentsController < ApplicationController
   end
   
   def destroy
-    DiaryComment.find(params[:id]).destroy
+    @comment.destroy
     flash[:warning] = "コメントを削除しました"
     redirect_to diary_path(params[:diary_id])
   end
   
+  def update
+    @comment.reload unless @comment.update(diary_comment_params)
+  end
+  
   private
+  
+  def set_comment
+    @comment = DiaryComment.find(params[:id])
+  end
 
   def diary_comment_params
     params.require(:diary_comment).permit(:comment)
