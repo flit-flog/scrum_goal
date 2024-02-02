@@ -22,21 +22,9 @@
       <%= link_to "戻る", :back ,class: 'text-dark font-weight-bold'%>
     </div>
     <div class="col-4 text-dark">
-      <% if @diary.favorited_by?(current_user) %>
-        <%= link_to diary_favorite_path(@diary), method: :delete do %>
-          <i class="fas fa-heart unlike-btn" ></i>
-        <% end %>
-        <%= @diary.favorites.count %>
-      <% else %>
-        <%= link_to diary_favorites_path(@diary), method: :post do %>
-          <i class="far fa-heart like-btn"></i>
-        <% end %>
-        <%= @diary.favorites.count %> 
-      <% end %>
-      
-      <% if @diary.favorites.present? %>
-        <%= link_to "いいね一覧",  favorited_user_path(@diary) %>
-      <% end %>
+      <div class="favorite_btn">
+        <%= render "favorites/favorite_btn", diary: @diary %> 
+      </div>
     </div>
   </div>
       
