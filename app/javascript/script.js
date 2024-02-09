@@ -3,7 +3,7 @@ $(document).on("turbolinks:load", () => {
   // 編集ボタンがクリックされた時の処理
   $("body").on("click", ".js-edit-comment-button",(e) => {
     // クリックされた編集ボタンの親要素からコメントIDを取得
-    const diary_commentId = $(e.target).parent().data('diary_commentId');                   
+    const diary_commentId = $(e.target).parent().data('commentId');                   
     // 対応するコメントのラベル要素を取得
     const commentLabelArea = $('#js-comment-label-' + diary_commentId);  
     // 対応するコメントの編集用テキストエリアを取得
